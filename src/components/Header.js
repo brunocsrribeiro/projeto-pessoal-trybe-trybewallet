@@ -5,9 +5,9 @@ class Header extends Component {
   render() {
     const { label, user, labelDespesa } = this.props;
     return (
-      <header data-testid="email-field">
+      <header>
         <h2>{ label }</h2>
-        <span>{ user }</span>
+        <span data-testid="email-field">{ user }</span>
         <span data-testid="total-field">{ labelDespesa }</span>
         <span data-testid="header-currency-field">BRL</span>
       </header>

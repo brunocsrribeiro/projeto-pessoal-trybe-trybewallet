@@ -10,6 +10,7 @@ class Wallet extends React.Component {
       <Header
         label="LOGO"
         user={ userEmail }
+        labelDespesa="0"
         data-testid="email-field"
       />
     );
