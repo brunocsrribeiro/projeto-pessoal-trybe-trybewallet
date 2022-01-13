@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 class SelectOption extends Component {
   render() {
     const {
+      id,
       label,
       name,
       onChange,
@@ -11,13 +12,13 @@ class SelectOption extends Component {
       defaultOption,
       defaultValue,
       dataTestId,
-      myOptions } = this.props;
+      options } = this.props;
 
     return (
       <label htmlFor={ name }>
         { label }
         <select
-          required
+          id={ id }
           name={ name }
           value={ value }
           onChange={ onChange }
@@ -25,9 +26,9 @@ class SelectOption extends Component {
         >
           <option value={ defaultValue }>{ defaultOption }</option>
           {
-            myOptions.map((option, index) => (
+            options && options.map((option, index) => (
               <option key={ index }>
-                { console.log(option) }
+                { option }
               </option>
             ))
           }
@@ -38,16 +39,23 @@ class SelectOption extends Component {
 }
 
 SelectOption.propTypes = {
+  id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   value: PropTypes.string.isRequired,
-  myOptions: PropTypes.arrayOf(
+  options: PropTypes.arrayOf(
     PropTypes.string,
-  ).isRequired,
+  ),
   dataTestId: PropTypes.string.isRequired,
-  defaultValue: PropTypes.string.isRequired,
+  defaultValue: PropTypes.string,
   defaultOption: PropTypes.string.isRequired,
+};
+
+SelectOption.defaultProps = {
+  defaultValue: '',
+  options: [],
+  onChange: null,
 };
 
 export default SelectOption;

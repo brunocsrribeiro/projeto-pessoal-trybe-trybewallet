@@ -37,7 +37,7 @@ class Wallet extends React.Component {
 
     const { userEmail } = this.props;
 
-    const metodos = ['Dinheiro', 'Cartão de crédito',
+    const methods = ['Dinheiro', 'Cartão de crédito',
       'Cartão de débito'];
 
     const tags = ['Alimentação', 'Lazer', 'Trabalho',
@@ -63,6 +63,7 @@ class Wallet extends React.Component {
             dataTestId="value-input"
           />
           <SelectOption
+            id="moeda"
             defaultOption="Selecione"
             name="moeda"
             label="Moeda: "
@@ -72,22 +73,24 @@ class Wallet extends React.Component {
             // options={}
           />
           <SelectOption
+            id="pagamento"
             defaultOption="Selecione"
             name="pagamento"
             label="Método de pagamento: "
             value={ metodoDePagamento }
             onChange={ this.handleChange }
             dataTestId="method-input"
-            myOptions={ metodos }
+            options={ methods }
           />
           <SelectOption
+            id="tag"
             defaultOption="Selecione"
             name="tag"
             label="Tag: "
             value={ tag }
             onChange={ this.handleChange }
             dataTestId="tag-input"
-            myOptions={ tags }
+            options={ tags }
           />
           <TextArea
             name="descricao"
@@ -113,7 +116,11 @@ const mapStateToProps = (state) => ({
 });
 
 Wallet.propTypes = {
-  userEmail: PropTypes.string.isRequired,
+  userEmail: PropTypes.string,
+};
+
+Wallet.defaultProps = {
+  userEmail: '',
 };
 
 export default connect(mapStateToProps)(Wallet);
