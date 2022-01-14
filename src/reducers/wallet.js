@@ -1,10 +1,8 @@
 import { GET_CURRENCIES, GET_EXPENSES } from '../actions';
 
 const INITIAL_STATE = {
-  wallet: {
-    currencies: [],
-    expenses: [],
-  },
+  currencies: [],
+  expenses: [],
 };
 
 const stateWallet = (state = INITIAL_STATE, action) => {

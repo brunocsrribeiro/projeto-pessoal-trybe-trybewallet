@@ -14,8 +14,8 @@ class Login extends Component {
       disabled: true,
     };
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleOnSubmit = this.handleOnSubmit.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this);
     this.validateEmail = this.validateEmail.bind(this);
     this.validatePassword = this.validatePassword.bind(this);
   }
@@ -47,13 +47,13 @@ class Login extends Component {
     });
   }
 
-  handleOnSubmit() {
+  handleOnClick() {
     const { history, dispatchLogin } = this.props;
     dispatchLogin(this.state);
     history.push('/carteira');
   }
 
-  handleChange({ target }) {
+  handleOnChange({ target }) {
     const { name, value } = target;
     this.setState({ [name]: value },
       () => this.validateLogin());
@@ -68,7 +68,7 @@ class Login extends Component {
           name="email"
           value={ email }
           label="Email: "
-          onChange={ this.handleChange }
+          onChange={ this.handleOnChange }
           dataTestId="email-input"
         />
 
@@ -77,13 +77,13 @@ class Login extends Component {
           name="password"
           value={ password }
           label="Senha: "
-          onChange={ this.handleChange }
+          onChange={ this.handleOnChange }
           dataTestId="password-input"
         />
 
         <button
           type="submit"
-          onClick={ this.handleOnSubmit }
+          onClick={ this.handleOnClick }
           disabled={ disabled }
         >
           Entrar
