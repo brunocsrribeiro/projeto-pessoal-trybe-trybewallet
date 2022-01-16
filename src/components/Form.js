@@ -6,21 +6,44 @@ import { getExpenses } from '../actions';
 import Input from './Input';
 import SelectOption from './SelectOption';
 import TextArea from './TextArea';
+import fetchAPI from '../services/serviceAPI';
+
+const ALIMENTACAO = 'Alimentação';
 
 class Form extends Component {
   constructor() {
     super();
 
     this.state = {
-      valor: '',
-      moeda: '',
-      metodoDePagamento: '',
-      tag: '',
-      descricao: '',
+      expensesInfo: {
+        valor: '',
+        moeda: 'CAD',
+        metodo: 'Dinheiro',
+        tag: ALIMENTACAO,
+        descricao: '',
+      },
+      currencies: [],
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
+    this.getCurrencyExchange = this.getCurrencyExchange.bind(this);
+  }
+
+  componentDidMount() {
+    this.getCurrencyExchange();
+  }
+
+  // Ref.: Usei alguns trechos de código da Juliane Cardoso,
+  // para conseguir alterar os valores nos campos do estado do componente.
+  async getCurrencyExchange() {
+    const data = await fetchAPI();
+    const currencies = Object.keys(data)
+      .filter((currency) => currency !== 'USDT');
+
+    this.setState({
+      currencies,
+    });
   }
 
   handleOnClick(event) {
@@ -29,10 +52,14 @@ class Form extends Component {
     dispatchData(this.state);
   }
 
-  handleChange({ target }) {
+  handleOnChange({ target }) {
     const { name, value } = target;
+    const { expensesInfo } = this.state;
     this.setState({
-      [name]: value,
+      expensesInfo: {
+        ...expensesInfo,
+        [name]: value,
+      },
     });
   }
 
@@ -40,13 +67,13 @@ class Form extends Component {
     const methods = ['Dinheiro', 'Cartão de crédito',
       'Cartão de débito'];
 
-    const tags = ['Alimentação', 'Lazer', 'Trabalho',
+    const tags = [ALIMENTACAO, 'Lazer', 'Trabalho',
       'Transporte', 'Saúde'];
 
-    const {
-      valor, moeda,
-      metodoDePagamento,
-      tag, descricao } = this.state;
+    const { expensesInfo, currencies } = this.state;
+
+    const { valor, moeda, metodo,
+      tag, descricao } = expensesInfo;
 
     return (
       <form onSubmit={ this.handleOnClick }>
@@ -55,7 +82,7 @@ class Form extends Component {
           name="valor"
           label="Valor: "
           value={ valor }
-          onChange={ this.handleChange }
+          onChange={ this.handleOnChange }
           dataTestId="value-input"
         />
         <SelectOption
@@ -63,18 +90,18 @@ class Form extends Component {
           defaultOption="Selecione"
           name="moeda"
           label="Moeda: "
-          value={ moeda }
-          onChange={ this.handleChange }
+          value={ !moeda ? 'CAD' : moeda }
+          onChange={ this.handleOnChange }
           dataTestId="currency-input"
-          // options={}
+          options={ currencies }
         />
         <SelectOption
-          id="pagamento"
+          id="metodo"
           defaultOption="Selecione"
-          name="pagamento"
+          name="metodo"
           label="Método de pagamento: "
-          value={ metodoDePagamento }
-          onChange={ this.handleChange }
+          value={ !metodo ? 'Dinheiro' : metodo }
+          onChange={ this.handleOnChange }
           dataTestId="method-input"
           options={ methods }
         />
@@ -83,8 +110,8 @@ class Form extends Component {
           defaultOption="Selecione"
           name="tag"
           label="Tag: "
-          value={ tag }
-          onChange={ this.handleChange }
+          value={ !tag ? ALIMENTACAO : tag }
+          onChange={ this.handleOnChange }
           dataTestId="tag-input"
           options={ tags }
         />
@@ -92,7 +119,7 @@ class Form extends Component {
           name="descricao"
           label="Descrição: "
           value={ descricao }
-          onChange={ this.handleChange }
+          onChange={ this.handleOnChange }
           maxLength="500"
           dataTestId="description-input"
         />

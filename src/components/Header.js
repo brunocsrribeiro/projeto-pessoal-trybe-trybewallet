@@ -7,8 +7,12 @@ class Header extends Component {
     return (
       <header>
         <h2>{ label }</h2>
-        <p data-testid="email-field">{ user }</p>
-        <p data-testid="total-field">{ labelDespesa }</p>
+        <p data-testid="email-field">
+          { `Usuário: ${user}` }
+        </p>
+        <p data-testid="total-field">
+          { `Despesa total: R$ ${labelDespesa}` }
+        </p>
         <p data-testid="header-currency-field">{ labelCambio }</p>
       </header>
     );
@@ -18,12 +22,13 @@ class Header extends Component {
 Header.propTypes = {
   label: PropTypes.string.isRequired,
   user: PropTypes.string,
-  labelDespesa: PropTypes.string.isRequired,
+  labelDespesa: PropTypes.number,
   labelCambio: PropTypes.string.isRequired,
 };
 
 Header.defaultProps = {
   user: '',
+  labelDespesa: 0,
 };
 
 export default Header;

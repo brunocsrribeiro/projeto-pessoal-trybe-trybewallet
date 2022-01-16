@@ -9,8 +9,6 @@ class SelectOption extends Component {
       name,
       onChange,
       value,
-      defaultOption,
-      defaultValue,
       dataTestId,
       options } = this.props;
 
@@ -24,10 +22,13 @@ class SelectOption extends Component {
           onChange={ onChange }
           data-testid={ dataTestId }
         >
-          <option value={ defaultValue }>{ defaultOption }</option>
           {
             options && options.map((option, index) => (
-              <option key={ index }>
+              <option
+                value={ option }
+                data-testid={ option }
+                key={ index }
+              >
                 { option }
               </option>
             ))
@@ -48,12 +49,9 @@ SelectOption.propTypes = {
     PropTypes.string,
   ),
   dataTestId: PropTypes.string.isRequired,
-  defaultValue: PropTypes.string,
-  defaultOption: PropTypes.string.isRequired,
 };
 
 SelectOption.defaultProps = {
-  defaultValue: '',
   options: [],
   onChange: null,
 };

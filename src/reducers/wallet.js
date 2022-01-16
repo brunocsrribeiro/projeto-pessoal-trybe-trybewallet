@@ -9,12 +9,10 @@ const stateWallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case GET_CURRENCIES:
     return {
-      ...state,
       currencies: action.payload.currencies,
     };
   case GET_EXPENSES:
     return {
-      ...state,
       expenses: action.payload.expenses,
     };
   default:
