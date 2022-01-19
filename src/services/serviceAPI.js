@@ -1,7 +1,7 @@
-const awesomeAPI = 'https://economia.awesomeapi.com.br/json/all';
-
-const fetchAPI = () => fetch(awesomeAPI)
-  .then((response) => response.json())
-  .then((data) => data);
+const fetchAPI = async () => {
+  const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+  const data = await response.json();
+  return data;
+};
 
 export default fetchAPI;

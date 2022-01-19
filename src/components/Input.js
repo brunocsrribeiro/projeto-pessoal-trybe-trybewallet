@@ -9,11 +9,11 @@ class Input extends Component {
       value,
       onChange,
       dataTestId,
-      label } = this.props;
+      labelText } = this.props;
 
     return (
       <label htmlFor={ name }>
-        { label }
+        { labelText }
         <input
           type={ type }
           name={ name }
@@ -32,11 +32,11 @@ Input.propTypes = {
   value: PropTypes.string,
   onChange: PropTypes.func,
   dataTestId: PropTypes.string,
-  label: PropTypes.string,
+  labelText: PropTypes.string,
 };
 
 Input.defaultProps = {
-  label: '',
+  labelText: '',
   value: '',
   name: '',
   onChange: null,

@@ -5,7 +5,7 @@ class SelectOption extends Component {
   render() {
     const {
       id,
-      label,
+      labelText,
       name,
       onChange,
       value,
@@ -14,7 +14,7 @@ class SelectOption extends Component {
 
     return (
       <label htmlFor={ name }>
-        { label }
+        { labelText }
         <select
           id={ id }
           name={ name }
@@ -41,7 +41,7 @@ class SelectOption extends Component {
 
 SelectOption.propTypes = {
   id: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
+  labelText: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func,
   value: PropTypes.string.isRequired,

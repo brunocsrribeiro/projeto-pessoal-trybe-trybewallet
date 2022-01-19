@@ -8,12 +8,12 @@ class TextArea extends Component {
       value,
       onChange,
       dataTestId,
-      label,
+      labelText,
       maxLength } = this.props;
 
     return (
       <label htmlFor={ name }>
-        { label }
+        { labelText }
         <textarea
           name={ name }
           value={ value }
@@ -27,12 +27,12 @@ class TextArea extends Component {
 }
 
 TextArea.propTypes = {
-  name: PropTypes.string.isRequired,
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-  dataTestId: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  maxLength: PropTypes.string.isRequired,
-};
+  name: PropTypes.string,
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  maxLength: PropTypes.string,
+  labelText: PropTypes.string,
+  dataTestId: PropTypes.string,
+}.isRequired;
 
 export default TextArea;

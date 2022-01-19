@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Input from '../components/Input';
 import { getLogin } from '../actions';
+import Button from '../components/Button';
 
 class Login extends Component {
   constructor() {
@@ -67,7 +68,7 @@ class Login extends Component {
           type="email"
           name="email"
           value={ email }
-          label="Email: "
+          labelText="Email: "
           onChange={ this.handleOnChange }
           dataTestId="email-input"
         />
@@ -76,18 +77,16 @@ class Login extends Component {
           type="password"
           name="password"
           value={ password }
-          label="Senha: "
+          labelText="Senha: "
           onChange={ this.handleOnChange }
           dataTestId="password-input"
         />
-
-        <button
+        <Button
           type="submit"
-          onClick={ this.handleOnClick }
+          labelText="Entrar"
           disabled={ disabled }
-        >
-          Entrar
-        </button>
+          onClick={ this.handleOnClick }
+        />
       </form>
     );
   }

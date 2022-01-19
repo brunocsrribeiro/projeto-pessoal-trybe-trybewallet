@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getExpenses } from '../actions';
+import { addExpenses,
+  getCurrencies,
+  getExpenses } from '../actions';
 
 import Input from './Input';
 import SelectOption from './SelectOption';
@@ -15,51 +17,91 @@ class Form extends Component {
     super();
 
     this.state = {
-      expensesInfo: {
-        valor: '',
-        moeda: 'CAD',
-        metodo: 'Dinheiro',
-        tag: ALIMENTACAO,
-        descricao: '',
-      },
+      id: 0,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: ALIMENTACAO,
+      exchangeRates: [],
       currencies: [],
     };
 
-    this.handleOnChange = this.handleOnChange.bind(this);
     this.handleOnClick = this.handleOnClick.bind(this);
+    this.handleOnChange = this.handleOnChange.bind(this);
+    this.getExchangeRates = this.getExchangeRates.bind(this);
     this.getCurrencyExchange = this.getCurrencyExchange.bind(this);
   }
 
   componentDidMount() {
+    this.getExchangeRates();
     this.getCurrencyExchange();
   }
 
-  // Ref.: Usei alguns trechos de código da Juliane Cardoso,
-  // para conseguir alterar os valores nos campos do estado do componente.
+  // Ref.: Código construido com a ajuda do colega Bruno Fay
   async getCurrencyExchange() {
     const data = await fetchAPI();
-    const currencies = Object.keys(data)
-      .filter((currency) => currency !== 'USDT');
+    const currencies = data;
+    const currencyRedux = Object.keys(currencies)
+      .filter((coin) => coin !== 'USDT');
 
     this.setState({
-      currencies,
+      currencies: currencyRedux,
+    });
+  }
+
+  async getExchangeRates() {
+    const data = await fetchAPI();
+    const exchangeRates = data;
+
+    this.setState({
+      exchangeRates,
     });
   }
 
   handleOnClick(event) {
     event.preventDefault();
-    const { dispatchData } = this.props;
-    dispatchData(this.state);
+    const {
+      dispatchData,
+      dispatchCurrency,
+      dispatchAddExpenses } = this.props;
+
+    const {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates,
+      currencies } = this.state;
+
+    const infoState = {
+      id,
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      exchangeRates };
+    dispatchData(infoState);
+    dispatchCurrency(currencies);
+    dispatchAddExpenses(this.state);
+
+    this.setState((prevState) => ({
+      id: prevState.id + 1,
+      value: '',
+      description: '',
+      currency: 'USD',
+      method: 'Dinheiro',
+      tag: ALIMENTACAO,
+    }));
   }
 
   handleOnChange({ target }) {
     const { name, value } = target;
-    const { expensesInfo } = this.state;
     this.setState({
-      expensesInfo: {
-        ...expensesInfo,
-        [name]: value,
-      },
+      [name]: value,
     });
   }
 
@@ -70,55 +112,55 @@ class Form extends Component {
     const tags = [ALIMENTACAO, 'Lazer', 'Trabalho',
       'Transporte', 'Saúde'];
 
-    const { expensesInfo, currencies } = this.state;
-
-    const { valor, moeda, metodo,
-      tag, descricao } = expensesInfo;
+    const {
+      value,
+      description,
+      currency,
+      method,
+      tag,
+      currencies } = this.state;
 
     return (
       <form onSubmit={ this.handleOnClick }>
         <Input
           type="number"
-          name="valor"
-          label="Valor: "
-          value={ valor }
+          name="value"
+          labelText="Valor: "
+          value={ value }
           onChange={ this.handleOnChange }
           dataTestId="value-input"
         />
         <SelectOption
-          id="moeda"
-          defaultOption="Selecione"
-          name="moeda"
-          label="Moeda: "
-          value={ !moeda ? 'CAD' : moeda }
+          id="currency"
+          name="currency"
+          labelText="Moeda: "
+          value={ !currency ? 'USD' : currency }
           onChange={ this.handleOnChange }
           dataTestId="currency-input"
           options={ currencies }
         />
         <SelectOption
-          id="metodo"
-          defaultOption="Selecione"
-          name="metodo"
-          label="Método de pagamento: "
-          value={ !metodo ? 'Dinheiro' : metodo }
+          id="method"
+          name="method"
+          labelText="Método de pagamento: "
+          value={ !method ? 'Dinheiro' : method }
           onChange={ this.handleOnChange }
           dataTestId="method-input"
           options={ methods }
         />
         <SelectOption
           id="tag"
-          defaultOption="Selecione"
           name="tag"
-          label="Tag: "
+          labelText="Tag: "
           value={ !tag ? ALIMENTACAO : tag }
           onChange={ this.handleOnChange }
           dataTestId="tag-input"
           options={ tags }
         />
         <TextArea
-          name="descricao"
-          label="Descrição: "
-          value={ descricao }
+          name="description"
+          labelText="Descrição: "
+          value={ description }
           onChange={ this.handleOnChange }
           maxLength="500"
           dataTestId="description-input"
@@ -134,10 +176,14 @@ class Form extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchData: (expenses) => dispatch(getExpenses(expenses)),
+  dispatchAddExpenses: (payload) => dispatch(addExpenses(payload)),
+  dispatchCurrency: (currencies) => dispatch(getCurrencies(currencies)),
 });
 
 Form.propTypes = {
-  dispatchData: PropTypes.func.isRequired,
-};
+  dispatchData: PropTypes.func,
+  dispatchCurrency: PropTypes.func,
+  dispatchAddExpenses: PropTypes.func,
+}.isRequired;
 
 export default connect(null, mapDispatchToProps)(Form);

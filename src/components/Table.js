@@ -1,7 +1,45 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Button from './Button';
+import { removeExpenses } from '../actions';
 
 class Table extends Component {
+  constructor() {
+    super();
+
+    this.currencyName = this.currencyName.bind(this);
+    this.currencyExchange = this.currencyExchange.bind(this);
+  }
+
+  currencyName = (data) => {
+    const currency = Object.assign(data.currency).split();
+    const name = Object.assign(data.exchangeRates[currency].name)
+      .replace('/Real Brasileiro', '');
+
+    return (name === 'Dólar Americano')
+      ? 'Dólar Comercial'
+      : name;
+  };
+
+  currencyExchange = (data) => {
+    const currencyValue = parseFloat(Object.values(data.exchangeRates)
+      .filter((rates) => rates.code === data.currency)
+      .map((price) => price.ask)[0]).toFixed(2);
+
+    return currencyValue;
+  }
+
+  handleClick = (event) => {
+    const { expensesTable } = this.props;
+    const newArr = expensesTable
+      .filter((evt) => Number(evt.id) !== Number(event.target.value));
+
+    return newArr;
+  }
+
   render() {
+    const { expensesTable, remove } = this.props;
     return (
       <table>
         <thead>
@@ -17,9 +55,50 @@ class Table extends Component {
             <th>Editar/Excluir</th>
           </tr>
         </thead>
+        <tbody>
+          {
+            expensesTable.map((data) => (
+              <tr key={ data.id }>
+                <td>{ data.description }</td>
+                <td>{ data.tag }</td>
+                <td>{ data.method }</td>
+                <td>{ data.value }</td>
+                <td>
+                  { this.currencyName(data) }
+                </td>
+                <td>
+                  { this.currencyExchange(data) }
+                </td>
+                <td>
+                  { this.currencyExchange(data) * data.value }
+                </td>
+                <td>Real</td>
+                <td>
+                  <Button
+                    onClick={ (event) => remove(this.handleClick(event)) }
+                    labelText="Excluir"
+                    dataTestId="delete-btn"
+                  />
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
       </table>
     );
   }
 }
 
-export default Table;
+const mapStateToProps = (state) => ({
+  expensesTable: state.wallet.expenses,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  remove: (payload) => dispatch(removeExpenses(payload)),
+});
+
+Table.propTypes = {
+  expensesTable: PropTypes.instanceOf(Array),
+}.isRequires;
+
+export default connect(mapStateToProps, mapDispatchToProps)(Table);

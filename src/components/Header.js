@@ -1,34 +1,49 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 class Header extends Component {
+  totalExpenses = () => {
+    const { expenses } = this.props;
+    return expenses.reduce((acc, currV) => {
+      const currencyValue = parseFloat(currV.value);
+      const currencyExchange = currV.exchangeRates[currV.currency].ask;
+      const results = currencyValue * currencyExchange;
+
+      return acc + results;
+    }, 0).toFixed(2);
+  };
+
   render() {
-    const { label, user, labelDespesa, labelCambio } = this.props;
+    const { labelText, user, labelExchange } = this.props;
     return (
       <header>
-        <h2>{ label }</h2>
+        <h2>{ labelText }</h2>
         <p data-testid="email-field">
           { `Usuário: ${user}` }
         </p>
         <p data-testid="total-field">
-          { `Despesa total: R$ ${labelDespesa}` }
+          { `Despesa total: R$ ${this.totalExpenses()}` }
         </p>
-        <p data-testid="header-currency-field">{ labelCambio }</p>
+        <span data-testid="header-currency-field">{ labelExchange }</span>
       </header>
     );
   }
 }
 
+const mapStateToProps = (state) => ({
+  expenses: state.wallet.expenses,
+});
+
 Header.propTypes = {
-  label: PropTypes.string.isRequired,
   user: PropTypes.string,
-  labelDespesa: PropTypes.number,
-  labelCambio: PropTypes.string.isRequired,
+  labelText: PropTypes.string.isRequired,
+  labelExchange: PropTypes.string.isRequired,
+  expenses: PropTypes.instanceOf(Array).isRequired,
 };
 
 Header.defaultProps = {
   user: '',
-  labelDespesa: 0,
 };
 
-export default Header;
+export default connect(mapStateToProps)(Header);
