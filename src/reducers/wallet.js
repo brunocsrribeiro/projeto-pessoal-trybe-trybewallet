@@ -1,8 +1,7 @@
 import {
   ADD_EXPENSES,
-  GET_CURRENCIES,
-  GET_EXPENSES,
-  REMOVE_EXPENSES } from '../actions';
+  REMOVE_EXPENSES,
+  GET_CURRENCIES_ACTION } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
@@ -11,22 +10,20 @@ const INITIAL_STATE = {
 
 const stateWallet = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case GET_CURRENCIES:
+  case GET_CURRENCIES_ACTION:
     return {
       ...state,
-      currencies: action.currencies,
+      currencies: action.payload.currencies,
     };
-  case GET_EXPENSES:
+  case ADD_EXPENSES:
+    // REF.: Essa estrutura eu fiz com ajuda do colega Leonardo Henrique.
+    action.expense.exchangeRates = action.rates;
     return {
       ...state,
       expenses: [
         ...state.expenses,
-        action.expenses,
+        action.expense,
       ],
-    };
-  case ADD_EXPENSES:
-    return {
-      ...state,
     };
   case REMOVE_EXPENSES:
     return {

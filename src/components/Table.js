@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from './Button';
-import { removeExpenses } from '../actions';
+import { removeExpensesAction } from '../actions';
 
 class Table extends Component {
   constructor() {
@@ -23,19 +23,20 @@ class Table extends Component {
   };
 
   currencyExchange = (data) => {
-    const currencyValue = parseFloat(Object.values(data.exchangeRates)
+    const currencyValue = Number(Object.values(data.exchangeRates)
       .filter((rates) => rates.code === data.currency)
-      .map((price) => price.ask)[0]).toFixed(2);
+      .map((price) => price.ask)[0]);
 
     return currencyValue;
   }
 
+  // REF.: Essa função eu fiz com  a ajuda do colega Luca Oliveira.
   handleClick = (event) => {
     const { expensesTable } = this.props;
-    const newArr = expensesTable
+    const deleteExpenseInfo = expensesTable
       .filter((evt) => Number(evt.id) !== Number(event.target.value));
 
-    return newArr;
+    return deleteExpenseInfo;
   }
 
   render() {
@@ -67,10 +68,10 @@ class Table extends Component {
                   { this.currencyName(data) }
                 </td>
                 <td>
-                  { this.currencyExchange(data) }
+                  { this.currencyExchange(data).toFixed(2) }
                 </td>
                 <td>
-                  { this.currencyExchange(data) * data.value }
+                  { (this.currencyExchange(data) * data.value).toFixed(2) }
                 </td>
                 <td>Real</td>
                 <td>
@@ -94,7 +95,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  remove: (payload) => dispatch(removeExpenses(payload)),
+  remove: (payload) => dispatch(removeExpensesAction(payload)),
 });
 
 Table.propTypes = {

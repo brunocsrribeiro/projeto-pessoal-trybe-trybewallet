@@ -7,13 +7,12 @@ import Table from '../components/Table';
 
 class Wallet extends React.Component {
   render() {
-    const { email, expenses } = this.props;
+    const { email } = this.props;
     return (
       <div>
         <Header
           labelText="LOGO"
           user={ email }
-          labelExpenses={ expenses ? 0 : null }
           labelExchange="BRL"
           data-testid="email-field"
         />
@@ -26,12 +25,10 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
-  expenses: state.wallet.expenses,
 });
 
 Wallet.propTypes = {
   email: PropTypes.string,
-  expenses: PropTypes.instanceOf(Array).isRequired,
 };
 
 Wallet.defaultProps = {

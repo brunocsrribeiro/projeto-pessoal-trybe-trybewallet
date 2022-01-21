@@ -1,4 +1,4 @@
-import { GET_LOGIN } from '../actions';
+import { GET_USER_LOGIN } from '../actions';
 
 const INITIAL_STATE = {
   user: {
@@ -8,7 +8,7 @@ const INITIAL_STATE = {
 
 const stateUser = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case GET_LOGIN:
+  case GET_USER_LOGIN:
     return {
       email: action.email,
     };

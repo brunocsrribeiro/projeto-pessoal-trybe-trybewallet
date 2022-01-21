@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { addExpenses,
-  getCurrencies,
-  getExpenses } from '../actions';
+import { getCurrenciesThunk, getExchangeRatesThunk } from '../actions';
 
 import Input from './Input';
 import SelectOption from './SelectOption';
 import TextArea from './TextArea';
-import fetchAPI from '../services/serviceAPI';
+import Button from './Button';
 
 const ALIMENTACAO = 'Alimentação';
 
@@ -24,69 +22,20 @@ class Form extends Component {
       method: 'Dinheiro',
       tag: ALIMENTACAO,
       exchangeRates: [],
-      currencies: [],
     };
 
     this.handleOnClick = this.handleOnClick.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
-    this.getExchangeRates = this.getExchangeRates.bind(this);
-    this.getCurrencyExchange = this.getCurrencyExchange.bind(this);
   }
 
   componentDidMount() {
-    this.getExchangeRates();
-    this.getCurrencyExchange();
+    const { getCurrencies } = this.props;
+    getCurrencies();
   }
 
-  // Ref.: Código construido com a ajuda do colega Bruno Fay
-  async getCurrencyExchange() {
-    const data = await fetchAPI();
-    const currencies = data;
-    const currencyRedux = Object.keys(currencies)
-      .filter((coin) => coin !== 'USDT');
-
-    this.setState({
-      currencies: currencyRedux,
-    });
-  }
-
-  async getExchangeRates() {
-    const data = await fetchAPI();
-    const exchangeRates = data;
-
-    this.setState({
-      exchangeRates,
-    });
-  }
-
-  handleOnClick(event) {
-    event.preventDefault();
-    const {
-      dispatchData,
-      dispatchCurrency,
-      dispatchAddExpenses } = this.props;
-
-    const {
-      id,
-      value,
-      description,
-      currency,
-      method,
-      tag,
-      exchangeRates,
-      currencies } = this.state;
-
-    const infoState = {
-      id,
-      value,
-      description,
-      currency,
-      method,
-      tag,
-      exchangeRates };
-    dispatchData(infoState);
-    dispatchCurrency(currencies);
-    dispatchAddExpenses(this.state);
+  handleOnClick() {
+    const { getExpensesThunk } = this.props;
+    getExpensesThunk(this.state);
 
     this.setState((prevState) => ({
       id: prevState.id + 1,
@@ -95,6 +44,7 @@ class Form extends Component {
       currency: 'USD',
       method: 'Dinheiro',
       tag: ALIMENTACAO,
+      exchangeRates: [],
     }));
   }
 
@@ -106,6 +56,7 @@ class Form extends Component {
   }
 
   render() {
+    const { getCurrency } = this.props;
     const methods = ['Dinheiro', 'Cartão de crédito',
       'Cartão de débito'];
 
@@ -117,11 +68,10 @@ class Form extends Component {
       description,
       currency,
       method,
-      tag,
-      currencies } = this.state;
+      tag } = this.state;
 
     return (
-      <form onSubmit={ this.handleOnClick }>
+      <form>
         <Input
           type="number"
           name="value"
@@ -137,7 +87,7 @@ class Form extends Component {
           value={ !currency ? 'USD' : currency }
           onChange={ this.handleOnChange }
           dataTestId="currency-input"
-          options={ currencies }
+          options={ getCurrency }
         />
         <SelectOption
           id="method"
@@ -165,25 +115,31 @@ class Form extends Component {
           maxLength="500"
           dataTestId="description-input"
         />
-        <Input
-          type="submit"
-          value="Adicionar Despesas"
+        <Button
+          type="button"
+          labelText="Adicionar Despesas"
+          onClick={ this.handleOnClick }
         />
       </form>
     );
   }
 }
 
+const mapStateToProps = (state) => ({
+  getCurrency: state.wallet.currencies,
+});
+
 const mapDispatchToProps = (dispatch) => ({
-  dispatchData: (expenses) => dispatch(getExpenses(expenses)),
-  dispatchAddExpenses: (payload) => dispatch(addExpenses(payload)),
-  dispatchCurrency: (currencies) => dispatch(getCurrencies(currencies)),
+  getCurrencies: () => dispatch(getCurrenciesThunk()),
+  getExpensesThunk: (expense) => dispatch(getExchangeRatesThunk(expense)),
+
+  // getExpenses: (expenses) => dispatch(getExpensesAction(expenses)),
 });
 
 Form.propTypes = {
-  dispatchData: PropTypes.func,
-  dispatchCurrency: PropTypes.func,
+  getCurrencies: PropTypes.func,
+  getExpensesThunk: PropTypes.func,
   dispatchAddExpenses: PropTypes.func,
 }.isRequired;
 
-export default connect(null, mapDispatchToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(Form);
