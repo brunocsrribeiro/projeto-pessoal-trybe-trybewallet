@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { getCurrenciesThunk, getExchangeRatesThunk } from '../actions';
+import { editExpensesAction } from '../actions';
 
 import Input from './Input';
 import SelectOption from './SelectOption';
@@ -10,7 +10,7 @@ import Button from './Button';
 
 const ALIMENTACAO = 'Alimentação';
 
-class Form extends Component {
+class FormEdit extends Component {
   constructor() {
     super();
 
@@ -21,31 +21,35 @@ class Form extends Component {
       currency: 'USD',
       method: 'Dinheiro',
       tag: ALIMENTACAO,
-      exchangeRates: [],
     };
 
-    this.handleOnClick = this.handleOnClick.bind(this);
+    this.saveEditExpenses = this.saveEditExpenses.bind(this);
     this.handleOnChange = this.handleOnChange.bind(this);
+    this.recoveryExpenseToEdit = this.recoveryExpenseToEdit.bind(this);
   }
 
   componentDidMount() {
-    const { getCurrencies } = this.props;
-    getCurrencies();
+    this.recoveryExpenseToEdit();
   }
 
-  handleOnClick() {
-    const { getExpensesThunk } = this.props;
-    getExpensesThunk(this.state);
+  recoveryExpenseToEdit() {
+    const { getExpenses, idToEdit } = this.props;
+    getExpenses.forEach((expense) => {
+      if (expense.id === idToEdit) {
+        this.setState((prevState) => ({
+          ...prevState,
+          ...expense,
+        }));
+      }
+    });
+  }
 
-    this.setState((prevState) => ({
-      id: prevState.id + 1,
-      value: '',
-      description: '',
-      currency: 'USD',
-      method: 'Dinheiro',
-      tag: ALIMENTACAO,
-      exchangeRates: [],
-    }));
+  saveEditExpenses() {
+    const { getExpenses, idToEdit, saveEditExpense } = this.props;
+    const newExpenses = getExpenses
+      .filter((expense) => expense.id !== idToEdit);
+
+    saveEditExpense([...newExpenses, this.state]);
   }
 
   handleOnChange({ target }) {
@@ -56,7 +60,10 @@ class Form extends Component {
   }
 
   render() {
-    const { getCurrency } = this.props;
+    const { exchangeRates } = this.state;
+    const codeCurrency = exchangeRates
+      ? Object.keys(exchangeRates) : ['USD'];
+
     const methods = ['Dinheiro', 'Cartão de crédito',
       'Cartão de débito'];
 
@@ -87,7 +94,7 @@ class Form extends Component {
           value={ !currency ? 'USD' : currency }
           onChange={ this.handleOnChange }
           dataTestId="currency-input"
-          options={ getCurrency }
+          options={ codeCurrency }
         />
         <SelectOption
           id="method"
@@ -117,8 +124,8 @@ class Form extends Component {
         />
         <Button
           type="button"
-          labelText="Adicionar Despesas"
-          onClick={ this.handleOnClick }
+          labelText="Editar despesa"
+          onClick={ this.saveEditExpenses }
         />
       </form>
     );
@@ -126,17 +133,19 @@ class Form extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  getCurrency: state.wallet.currencies,
+  idToEdit: state.wallet.idToEdit,
+  getExpenses: state.wallet.expenses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getCurrencies: () => dispatch(getCurrenciesThunk()),
-  getExpensesThunk: (expense) => dispatch(getExchangeRatesThunk(expense)),
+  saveEditExpense: (expenses) => dispatch(editExpensesAction(expenses)),
 });
 
-Form.propTypes = {
-  getCurrencies: PropTypes.func,
-  getExpensesThunk: PropTypes.func,
+FormEdit.propTypes = {
+  dispatchEditing: PropTypes.func,
+  setEditExpense: PropTypes.func,
+  idToEdit: PropTypes.number,
+  getExpenses: PropTypes.instanceOf(Array),
 }.isRequired;
 
-export default connect(mapStateToProps, mapDispatchToProps)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(FormEdit);

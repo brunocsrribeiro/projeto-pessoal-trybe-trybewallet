@@ -2,18 +2,20 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Button from './Button';
-import { removeExpensesAction } from '../actions';
+import { removeExpensesAction,
+  setIdAction } from '../actions';
 
 class Table extends Component {
   constructor() {
     super();
 
     this.currencyName = this.currencyName.bind(this);
+    this.onClickDelete = this.onClickDelete.bind(this);
     this.currencyExchange = this.currencyExchange.bind(this);
   }
 
   currencyName = (data) => {
-    const currency = Object.assign(data.currency).split();
+    const currency = Object.values(data.currency).join('');
     const name = Object.assign(data.exchangeRates[currency].name)
       .replace('/Real Brasileiro', '');
 
@@ -30,17 +32,20 @@ class Table extends Component {
     return currencyValue;
   }
 
-  // REF.: Essa função eu fiz com  a ajuda do colega Luca Oliveira.
-  handleClick = (event) => {
+  // REF.: Essa função eu fiz com  a ajuda do colega Lucas Oliveira.
+  onClickDelete = (id) => {
     const { expensesTable } = this.props;
     const deleteExpenseInfo = expensesTable
-      .filter((evt) => Number(evt.id) !== Number(event.target.value));
+      .filter((expense) => Number(expense.id) !== Number(id));
 
     return deleteExpenseInfo;
   }
 
   render() {
-    const { expensesTable, remove } = this.props;
+    const { expensesTable,
+      dispatchRemove,
+      dispatchIdEdit } = this.props;
+
     return (
       <table>
         <thead>
@@ -58,25 +63,27 @@ class Table extends Component {
         </thead>
         <tbody>
           {
-            expensesTable.map((data) => (
+            expensesTable.sort((a, b) => a.id - b.id).map((data) => (
               <tr key={ data.id }>
                 <td>{ data.description }</td>
                 <td>{ data.tag }</td>
                 <td>{ data.method }</td>
                 <td>{ data.value }</td>
-                <td>
-                  { this.currencyName(data) }
-                </td>
-                <td>
-                  { this.currencyExchange(data).toFixed(2) }
-                </td>
-                <td>
-                  { (this.currencyExchange(data) * data.value).toFixed(2) }
-                </td>
+                <td>{ this.currencyName(data) }</td>
+                <td>{ this.currencyExchange(data).toFixed(2) }</td>
+                <td>{ (this.currencyExchange(data) * data.value).toFixed(2) }</td>
                 <td>Real</td>
                 <td>
                   <Button
-                    onClick={ (event) => remove(this.handleClick(event)) }
+                    value="Editar despesa"
+                    onClick={ () => {
+                      dispatchIdEdit(data.id);
+                    } }
+                    labelText="Editar"
+                    dataTestId="edit-btn"
+                  />
+                  <Button
+                    onClick={ () => dispatchRemove(this.onClickDelete(data.id)) }
                     labelText="Excluir"
                     dataTestId="delete-btn"
                   />
@@ -95,10 +102,17 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  remove: (payload) => dispatch(removeExpensesAction(payload)),
+  // dispatchUpdateExpense: (payload) => dispatch(updateExpenseAction(payload)),
+  dispatchIdEdit: (id) => dispatch(setIdAction(id)),
+  // dispatchEdit: (isEdit) => dispatch(setEditAction(isEdit)),
+  dispatchRemove: (payload) => dispatch(removeExpensesAction(payload)),
 });
 
 Table.propTypes = {
+  // dispatchEdit: PropTypes.func,
+  dispatchIdEdit: PropTypes.func,
+  dispatchRemove: PropTypes.func,
+  isEdit: PropTypes.bool,
   expensesTable: PropTypes.instanceOf(Array),
 }.isRequires;
 

@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 class Button extends Component {
   render() {
     const {
+      id,
+      value,
       onClick,
       disabled,
       labelText,
@@ -11,6 +13,8 @@ class Button extends Component {
 
     return (
       <button
+        id={ id }
+        value={ value }
         type="button"
         onClick={ onClick }
         disabled={ disabled }
@@ -23,6 +27,8 @@ class Button extends Component {
 }
 
 Button.propTypes = {
+  id: PropTypes.number,
+  value: PropTypes.number,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
   dataTestId: PropTypes.string,
@@ -30,6 +36,8 @@ Button.propTypes = {
 };
 
 Button.defaultProps = {
+  id: 0,
+  value: null,
   onClick: null,
   dataTestId: '',
   disabled: false,

@@ -1,11 +1,16 @@
 import {
-  ADD_EXPENSES,
-  REMOVE_EXPENSES,
-  GET_CURRENCIES_ACTION } from '../actions';
+  ADD_EXPENSES_ACTION,
+  EDIT_EXPENSES_ACTION,
+  GET_CURRENCIES_ACTION,
+  REMOVE_EXPENSES_ACTION,
+  SET_EDIT_ACTION,
+  SET_ID_ACTION,
+  UPDATE_EXPENSE_ACTION } from '../actions';
 
 const INITIAL_STATE = {
   currencies: [],
   expenses: [],
+  isEdit: false,
 };
 
 const stateWallet = (state = INITIAL_STATE, action) => {
@@ -15,8 +20,8 @@ const stateWallet = (state = INITIAL_STATE, action) => {
       ...state,
       currencies: action.payload.currencies,
     };
-  case ADD_EXPENSES:
-    // REF.: Essa estrutura eu fiz com ajuda do colega Leonardo Henrique.
+  case ADD_EXPENSES_ACTION:
+    // REF.: Essa estrutura, eu fiz com ajuda do colega Leonardo Henrique.
     action.expense.exchangeRates = action.rates;
     return {
       ...state,
@@ -25,10 +30,32 @@ const stateWallet = (state = INITIAL_STATE, action) => {
         action.expense,
       ],
     };
-  case REMOVE_EXPENSES:
+  case SET_EDIT_ACTION:
+    return {
+      ...state,
+      isEdit: action.payload,
+    };
+  case SET_ID_ACTION:
+    return {
+      ...state,
+      idToEdit: action.payload,
+      isEdit: true,
+    };
+  case EDIT_EXPENSES_ACTION:
+    return {
+      ...state,
+      expenses: action.expenses,
+      isEdit: false,
+    };
+  case REMOVE_EXPENSES_ACTION:
     return {
       ...state,
       expenses: action.payload,
+    };
+  case UPDATE_EXPENSE_ACTION:
+    return {
+      ...state,
+      id: action.id,
     };
   default:
     return state;

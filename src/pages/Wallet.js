@@ -4,10 +4,11 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Form from '../components/Form';
 import Table from '../components/Table';
+import FormEdit from '../components/FormEdit';
 
 class Wallet extends React.Component {
   render() {
-    const { email } = this.props;
+    const { email, isEdit } = this.props;
     return (
       <div>
         <Header
@@ -16,7 +17,7 @@ class Wallet extends React.Component {
           labelExchange="BRL"
           data-testid="email-field"
         />
-        <Form />
+        { isEdit ? <FormEdit /> : <Form /> }
         <Table />
       </div>
     );
@@ -25,10 +26,12 @@ class Wallet extends React.Component {
 
 const mapStateToProps = (state) => ({
   email: state.user.email,
+  isEdit: state.wallet.isEdit,
 });
 
 Wallet.propTypes = {
   email: PropTypes.string,
+  isEdit: PropTypes.bool.isRequired,
 };
 
 Wallet.defaultProps = {
