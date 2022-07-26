@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { TextareaStyle } from '../styles';
 
 class TextArea extends Component {
   render() {
@@ -7,19 +8,17 @@ class TextArea extends Component {
       name,
       value,
       onChange,
-      dataTestId,
       labelText,
       maxLength } = this.props;
 
     return (
       <label htmlFor={ name }>
         { labelText }
-        <textarea
+        <TextareaStyle
           name={ name }
           value={ value }
           onChange={ onChange }
           maxLength={ maxLength }
-          data-testid={ dataTestId }
         />
       </label>
     );
@@ -32,7 +31,6 @@ TextArea.propTypes = {
   onChange: PropTypes.func,
   maxLength: PropTypes.string,
   labelText: PropTypes.string,
-  dataTestId: PropTypes.string,
 }.isRequired;
 
 export default TextArea;

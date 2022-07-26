@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import Input from '../components/Input';
 import Button from '../components/Button';
 import { getUserLogin } from '../actions';
+import { ContainerLogin, FormLoginStyle, theme } from '../styles';
+import { ThemeProvider } from 'styled-components';
 
 class Login extends Component {
   constructor() {
@@ -63,31 +65,35 @@ class Login extends Component {
   render() {
     const { email, password, disabled } = this.state;
     return (
-      <form>
-        <Input
-          type="email"
-          name="email"
-          value={ email }
-          labelText="Email: "
-          onChange={ this.handleOnChange }
-          dataTestId="email-input"
-        />
+      <ThemeProvider theme={ theme }>
+        <ContainerLogin>
+          <FormLoginStyle>
+            <Input
+              type="email"
+              name="email"
+              value={ email }
+              placeholder="Email"
+              onChange={ this.handleOnChange }
+              id="email-input"
+            />
 
-        <Input
-          type="password"
-          name="password"
-          value={ password }
-          labelText="Senha: "
-          onChange={ this.handleOnChange }
-          dataTestId="password-input"
-        />
-        <Button
-          type="submit"
-          labelText="Entrar"
-          disabled={ disabled }
-          onClick={ this.handleOnClick }
-        />
-      </form>
+            <Input
+              type="password"
+              name="password"
+              value={ password }
+              placeholder="Senha"
+              onChange={ this.handleOnChange }
+              id="password-input"
+            />
+            <Button
+              type="submit"
+              labelText="Entrar"
+              disabled={ disabled }
+              onClick={ this.handleOnClick }
+            />
+          </FormLoginStyle>
+        </ContainerLogin>
+      </ThemeProvider>
     );
   }
 }

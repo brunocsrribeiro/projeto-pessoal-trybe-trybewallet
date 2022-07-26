@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Select } from '../styles';
 
 class SelectOption extends Component {
   render() {
@@ -15,7 +16,7 @@ class SelectOption extends Component {
     return (
       <label htmlFor={ name }>
         { labelText }
-        <select
+        <Select
           id={ id }
           name={ name }
           value={ value }
@@ -33,7 +34,7 @@ class SelectOption extends Component {
               </option>
             ))
           }
-        </select>
+        </Select>
       </label>
     );
   }

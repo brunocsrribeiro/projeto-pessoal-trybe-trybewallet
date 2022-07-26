@@ -5,21 +5,27 @@ import Header from '../components/Header';
 import Form from '../components/Form';
 import Table from '../components/Table';
 import FormEdit from '../components/FormEdit';
+import { ThemeProvider } from 'styled-components';
+import { theme } from '../styles/GlobalStyle';
 
 class Wallet extends React.Component {
   render() {
     const { email, isEdit } = this.props;
     return (
-      <div>
-        <Header
-          labelText="LOGO"
-          user={ email }
-          labelExchange="BRL"
-          data-testid="email-field"
-        />
-        { isEdit ? <FormEdit /> : <Form /> }
-        <Table />
-      </div>
+      <ThemeProvider theme={ theme }>
+          <Header
+            labelText="Money Honey"
+            user={ email }
+            labelExchange="BRL"
+            id="email-field"
+          />
+        <div>
+          { isEdit ? <FormEdit /> : <Form /> }
+        </div>
+        <div>
+          <Table />
+        </div>
+      </ThemeProvider>
     );
   }
 }

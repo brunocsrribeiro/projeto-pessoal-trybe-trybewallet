@@ -80,12 +80,12 @@ class Table extends Component {
                       dispatchIdEdit(data.id);
                     } }
                     labelText="Editar"
-                    dataTestId="edit-btn"
+                    id="edit-btn"
                   />
                   <Button
                     onClick={ () => dispatchRemove(this.onClickDelete(data.id)) }
                     labelText="Excluir"
-                    dataTestId="delete-btn"
+                    id="delete-btn"
                   />
                 </td>
               </tr>
