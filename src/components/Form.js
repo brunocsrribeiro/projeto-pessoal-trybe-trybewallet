@@ -7,6 +7,7 @@ import Input from './Input';
 import SelectOption from './SelectOption';
 import TextArea from './TextArea';
 import Button from './Button';
+import { ContainerForms, FormStyle } from '../styles';
 
 const ALIMENTACAO = 'Alimentação';
 
@@ -71,56 +72,60 @@ class Form extends Component {
       tag } = this.state;
 
     return (
-      <form>
-        <Input
-          type="number"
-          name="value"
-          labelText="Valor: "
-          value={ value }
-          onChange={ this.handleOnChange }
-          dataTestId="value-input"
-        />
-        <SelectOption
-          id="currency"
-          name="currency"
-          labelText="Moeda: "
-          value={ !currency ? 'USD' : currency }
-          onChange={ this.handleOnChange }
-          dataTestId="currency-input"
-          options={ getCurrency }
-        />
-        <SelectOption
-          id="method"
-          name="method"
-          labelText="Método de pagamento: "
-          value={ !method ? 'Dinheiro' : method }
-          onChange={ this.handleOnChange }
-          dataTestId="method-input"
-          options={ methods }
-        />
-        <SelectOption
-          id="tag"
-          name="tag"
-          labelText="Tag: "
-          value={ !tag ? ALIMENTACAO : tag }
-          onChange={ this.handleOnChange }
-          dataTestId="tag-input"
-          options={ tags }
-        />
-        <TextArea
-          name="description"
-          labelText="Descrição: "
-          value={ description }
-          onChange={ this.handleOnChange }
-          maxLength="500"
-          dataTestId="description-input"
-        />
-        <Button
-          type="button"
-          labelText="Adicionar Despesas"
-          onClick={ this.handleOnClick }
-        />
-      </form>
+      <ContainerForms>
+        <FormStyle>
+          <Input
+            type="number"
+            name="value"
+            placeholder={ !currency ? 'USD' : currency }
+            labelText="Valor"
+            value={ value }
+            onChange={ this.handleOnChange }
+            id="value-input"
+          />
+          <SelectOption
+            id="currency"
+            name="currency"
+            labelText="Moeda"
+            value={ !currency ? 'USD' : currency }
+            onChange={ this.handleOnChange }
+            class="currency-input"
+            options={ getCurrency }
+          />
+          <SelectOption
+            id="method"
+            name="method"
+            labelText="Método de pagamento"
+            value={ !method ? 'Dinheiro' : method }
+            onChange={ this.handleOnChange }
+            class="method-input"
+            options={ methods }
+          />
+          <SelectOption
+            id="tag"
+            name="tag"
+            labelText="Tag"
+            value={ !tag ? ALIMENTACAO : tag }
+            onChange={ this.handleOnChange }
+            class="tag-input"
+            options={ tags }
+          />
+          <TextArea
+            name="description"
+            labelText="Descrição"
+            value={ description }
+            onChange={ this.handleOnChange }
+            maxLength="500"
+            id="description-input"
+          />
+          <Button
+            id="wallet-btn"
+            type="button"
+            labelText="Adicionar Despesas"
+            onClick={ this.handleOnClick }
+          />
+        </FormStyle>
+      </ContainerForms>
     );
   }
 }

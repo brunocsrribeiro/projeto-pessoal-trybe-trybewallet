@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Container, Fields, HeaderStyle, theme } from '../styles';
+import { ThemeProvider } from 'styled-components';
 
 class Header extends Component {
   totalExpenses = () => {
@@ -18,16 +20,24 @@ class Header extends Component {
   render() {
     const { labelText, user, labelExchange } = this.props;
     return (
-      <header>
-        <h2>{ labelText }</h2>
-        <p data-testid="email-field">
-          { `Usuário: ${user}` }
-        </p>
-        <p data-testid="total-field">
-          { `Despesa total: R$ ${this.totalExpenses()}` }
-        </p>
-        <span data-testid="header-currency-field">{ labelExchange }</span>
-      </header>
+      <ThemeProvider theme={ theme }>
+        <Container>
+          <HeaderStyle>
+            <h1>{ labelText }</h1>
+          </HeaderStyle>
+          <Fields>
+            <div>
+              <p id="email-field">
+                { `Usuário: ${user}` }
+              </p>
+              <p id="total-field">
+                { `Despesa total: R$ ${this.totalExpenses()}` }
+              </p>
+            </div>
+            <span id="header-currency-field">{ labelExchange }</span>
+          </Fields>
+        </Container>
+      </ThemeProvider>
     );
   }
 }

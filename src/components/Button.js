@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { ThemeProvider } from 'styled-components';
+import { ButtonStyle, theme } from '../styles';
 
 class Button extends Component {
   render() {
@@ -8,20 +10,20 @@ class Button extends Component {
       value,
       onClick,
       disabled,
-      labelText,
-      dataTestId } = this.props;
+      labelText } = this.props;
 
     return (
-      <button
-        id={ id }
-        value={ value }
-        type="button"
-        onClick={ onClick }
-        disabled={ disabled }
-        data-testid={ dataTestId }
-      >
-        { labelText }
-      </button>
+      <ThemeProvider theme={ theme }>
+        <ButtonStyle
+          id={ id }
+          value={ value }
+          type="button"
+          onClick={ onClick }
+          disabled={ disabled }
+        >
+          { labelText }
+        </ButtonStyle>
+      </ThemeProvider>
     );
   }
 }
@@ -31,7 +33,6 @@ Button.propTypes = {
   value: PropTypes.number,
   onClick: PropTypes.func,
   disabled: PropTypes.bool,
-  dataTestId: PropTypes.string,
   labelText: PropTypes.string.isRequired,
 };
 
@@ -39,7 +40,6 @@ Button.defaultProps = {
   id: 0,
   value: null,
   onClick: null,
-  dataTestId: '',
   disabled: false,
 };
 

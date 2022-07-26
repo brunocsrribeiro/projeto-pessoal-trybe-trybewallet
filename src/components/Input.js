@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { InputStyle } from '../styles';
 
 class Input extends Component {
   render() {
@@ -8,18 +9,18 @@ class Input extends Component {
       name,
       value,
       onChange,
-      dataTestId,
+      placeholder,
       labelText } = this.props;
 
     return (
       <label htmlFor={ name }>
         { labelText }
-        <input
+        <InputStyle
           type={ type }
           name={ name }
           value={ value }
+          placeholder={ placeholder }
           onChange={ onChange }
-          data-testid={ dataTestId }
         />
       </label>
     );
@@ -31,8 +32,8 @@ Input.propTypes = {
   name: PropTypes.string,
   value: PropTypes.string,
   onChange: PropTypes.func,
-  dataTestId: PropTypes.string,
   labelText: PropTypes.string,
+  placeholder: PropTypes.string,
 };
 
 Input.defaultProps = {
@@ -40,7 +41,7 @@ Input.defaultProps = {
   value: '',
   name: '',
   onChange: null,
-  dataTestId: '',
+  placeholder: '',
 };
 
 export default Input;
