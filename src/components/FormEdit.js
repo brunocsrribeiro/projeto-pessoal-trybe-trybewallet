@@ -128,7 +128,7 @@ class FormEdit extends Component {
           <Button
             id="wallet-btn"
             type="button"
-            labelText="Editar despesa"
+            labelText="Editar"
             onClick={ this.saveEditExpenses }
           />
         </FormStyle>

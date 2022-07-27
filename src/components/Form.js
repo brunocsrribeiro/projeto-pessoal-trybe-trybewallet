@@ -121,7 +121,7 @@ class Form extends Component {
           <Button
             id="wallet-btn"
             type="button"
-            labelText="Adicionar Despesas"
+            labelText="Adicionar"
             onClick={ this.handleOnClick }
           />
         </FormStyle>

@@ -7,6 +7,7 @@ import Table from '../components/Table';
 import FormEdit from '../components/FormEdit';
 import { ThemeProvider } from 'styled-components';
 import { theme } from '../styles/GlobalStyle';
+import { ContainerTable } from '../styles';
 
 class Wallet extends React.Component {
   render() {
@@ -22,9 +23,9 @@ class Wallet extends React.Component {
         <div>
           { isEdit ? <FormEdit /> : <Form /> }
         </div>
-        <div>
+        <ContainerTable>
           <Table />
-        </div>
+        </ContainerTable>
       </ThemeProvider>
     );
   }

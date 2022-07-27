@@ -1,31 +1,31 @@
 import styled from 'styled-components';
 
 export const Container = styled.header`
+  align-items: center;
   background: ${ props => props.theme.primaryColor };
+  border-bottom: 2px solid ${ props => props.theme.secondaryColor } ;
+  display: flex;
+  height: 15vh;
+  justify-content: space-evenly;
+  max-height: 25vh;
   position: fixed;
   top: 0;
-  height: 15vh;
-  max-height: 25vh;
   width: 100%;
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  border-bottom: 2px solid ${ props => props.theme.secondaryColor } ;
 `;
 
 export const HeaderStyle = styled.div`
+  color: ${ props => props.theme.secondaryColor };
   font-size: large;
   letter-spacing: .25em;
   width: 60%;
-  color: ${ props => props.theme.secondaryColor };
 `;
 
 export const Fields = styled.div`
+  align-items: center;
   display: flex;
   justify-content: space-around;
-  align-items: center;
-  width: 25%;
   letter-spacing: .10em;
+  width: 25%;
 
   div {
     color: ${ props => props.theme.secondaryColor };
@@ -35,8 +35,8 @@ export const Fields = styled.div`
 
   span {
     background: ${ props => props.theme.secondaryColor };
-    padding: 12px;
     border-radius: 100%;
     color: ${ props => props.theme.primaryColor };
+    padding: 12px;
   }
 `;

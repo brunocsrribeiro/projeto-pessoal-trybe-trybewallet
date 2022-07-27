@@ -2,8 +2,8 @@ import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
   * {
-    font-family: 'Edu VIC WA NT Beginner', cursive;
     box-sizing: border-box;
+    font-family: 'Edu VIC WA NT Beginner', cursive;
     margin: 0;
     padding: 0;
   }

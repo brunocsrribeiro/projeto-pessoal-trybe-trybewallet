@@ -1,9 +1,9 @@
 import styled from 'styled-components';
 
 export const TextareaStyle = styled.textarea`
-  outline: none;
-  resize: none;
-  line-height: 1.5em;
-  padding: 5px;
   height: 10vh;
+  line-height: 1.5em;
+  outline: none;
+  padding: 5px;
+  resize: none;
 `;
