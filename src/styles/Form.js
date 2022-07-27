@@ -1,18 +1,18 @@
 import styled from "styled-components";
 
 export const ContainerForms = styled.div`
-  height: 66vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  display: flex;
   flex-direction: column;
+  height: 66vh;
+  justify-content: center;
+  width: 100vw;
 `;
 
 export const FormStyle = styled.form`
   display: grid;
-  grid-template-columns: repeat(2, auto);
   gap: .5rem;
+  grid-template-columns: repeat(2, auto);
   width: 70vw;
 
   label {

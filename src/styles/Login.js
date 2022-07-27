@@ -1,36 +1,36 @@
 import styled from "styled-components";
 
 export const ContainerLogin = styled.div`
-  height: 100vh;
-  display: flex;
-  justify-content: center;
   align-items: center;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
 `;
 
 export const FormLoginStyle = styled.form`
+  align-items: center;
+  align-items: center;
+  background: ${ props => props.theme.quinaryColor };
+  border-radius: 4px;
+  box-shadow: 2px 2px 8px ${ props => props.theme.quinaryColor };
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  align-items: center;
-  width: 50vw;
   height: 50vh;
-  background: ${ props => props.theme.quinaryColor };
-  box-shadow: 2px 2px 8px ${ props => props.theme.quinaryColor };
-  border-radius: 4px;
+  justify-content: center;
+  width: 50vw;
 
   input {
-    border: none;
-    border: 1px solid ${ props => props.theme.tertiaryColor };
-    border-radius: 4px;
     background: none;
+    border-radius: 4px;
+    border: 1px solid ${ props => props.theme.tertiaryColor };
+    border: none;
+    letter-spacing: .2em;
+    line-height: 2em;
+    margin-bottom: 20px;
     outline: none;
     padding: .8em;
-    line-height: 2em;
-    letter-spacing: .2em;
-    width: 35vw;
     text-align: center;
-    margin-bottom: 20px;
+    width: 35vw;
   };
 
   button {

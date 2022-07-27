@@ -6,20 +6,23 @@ import { Select } from './Select';
 import { InputStyle } from './Input';
 import { TextareaStyle } from './Textarea';
 import { FormLoginStyle, ContainerLogin } from './Login';
+import { ContainerTable, TableStyle } from './Table';
 
 
 export {
-  GlobalStyle,
   ButtonStyle,
-  FormStyle,
-  HeaderStyle,
-  Fields,
   Container,
-  theme,
   ContainerForms,
-  Select,
-  InputStyle,
-  TextareaStyle,
-  FormLoginStyle,
   ContainerLogin,
+  ContainerTable,
+  Fields,
+  FormLoginStyle,
+  FormStyle,
+  GlobalStyle,
+  HeaderStyle,
+  InputStyle,
+  Select,
+  TableStyle,
+  TextareaStyle,
+  theme,
 };

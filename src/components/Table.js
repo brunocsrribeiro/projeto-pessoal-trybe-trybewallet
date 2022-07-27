@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Button from './Button';
 import { removeExpensesAction,
   setIdAction } from '../actions';
+import { TableStyle } from '../styles';
 
 class Table extends Component {
   constructor() {
@@ -47,10 +48,10 @@ class Table extends Component {
       dispatchIdEdit } = this.props;
 
     return (
-      <table>
+      <TableStyle>
         <thead>
           <tr>
-            <th>Descrição</th>
+            <th className='border-radius-description'>Descrição</th>
             <th>Tag</th>
             <th>Método de pagamento</th>
             <th>Valor</th>
@@ -58,14 +59,14 @@ class Table extends Component {
             <th>Câmbio utilizado</th>
             <th>Valor convertido</th>
             <th>Moeda de conversão</th>
-            <th>Editar/Excluir</th>
+            <th className='border-radius-edit-remove'>Editar/Excluir</th>
           </tr>
         </thead>
         <tbody>
           {
             expensesTable.sort((a, b) => a.id - b.id).map((data) => (
               <tr key={ data.id }>
-                <td>{ data.description }</td>
+                <td className='border-description'>{ data.description }</td>
                 <td>{ data.tag }</td>
                 <td>{ data.method }</td>
                 <td>{ data.value }</td>
@@ -73,18 +74,18 @@ class Table extends Component {
                 <td>{ this.currencyExchange(data).toFixed(2) }</td>
                 <td>{ (this.currencyExchange(data) * data.value).toFixed(2) }</td>
                 <td>Real</td>
-                <td>
+                <td className='table-btns'>
                   <Button
                     value="Editar despesa"
                     onClick={ () => {
                       dispatchIdEdit(data.id);
                     } }
-                    labelText="Editar"
+                    labelText=""
                     id="edit-btn"
                   />
                   <Button
                     onClick={ () => dispatchRemove(this.onClickDelete(data.id)) }
-                    labelText="Excluir"
+                    labelText=""
                     id="delete-btn"
                   />
                 </td>
@@ -92,7 +93,7 @@ class Table extends Component {
             ))
           }
         </tbody>
-      </table>
+      </TableStyle>
     );
   }
 }
