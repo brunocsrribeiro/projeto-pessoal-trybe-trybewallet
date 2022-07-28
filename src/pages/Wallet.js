@@ -15,7 +15,6 @@ class Wallet extends React.Component {
     return (
       <ThemeProvider theme={ theme }>
           <Header
-            labelText="Money Honey"
             user={ email }
             labelExchange="BRL"
             id="email-field"
@@ -45,4 +44,6 @@ Wallet.defaultProps = {
   email: '',
 };
 
-export default connect(mapStateToProps, null)(Wallet);
+export default connect(
+  mapStateToProps, 
+  null)(Wallet);

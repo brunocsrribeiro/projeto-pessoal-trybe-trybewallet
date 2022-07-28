@@ -4,7 +4,7 @@ export const ContainerForms = styled.div`
   align-items: center;
   display: flex;
   flex-direction: column;
-  height: 66vh;
+  height: 70vh;
   justify-content: center;
   width: 100vw;
 `;

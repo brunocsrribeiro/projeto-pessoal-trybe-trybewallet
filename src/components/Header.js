@@ -18,12 +18,12 @@ class Header extends Component {
   };
 
   render() {
-    const { labelText, user, labelExchange } = this.props;
+    const { user, labelExchange } = this.props;
     return (
       <ThemeProvider theme={ theme }>
         <Container>
           <HeaderStyle>
-            <h1>{ labelText }</h1>
+            <h1>Twinee</h1>
           </HeaderStyle>
           <Fields>
             <div>

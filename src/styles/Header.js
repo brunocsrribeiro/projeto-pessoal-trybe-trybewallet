@@ -2,11 +2,10 @@ import styled from 'styled-components';
 
 export const Container = styled.header`
   align-items: center;
-  background: ${ props => props.theme.primaryColor };
-  border-bottom: 2px solid ${ props => props.theme.secondaryColor } ;
+  background: ${ props => props.theme.primary };
   display: flex;
-  height: 15vh;
-  justify-content: space-evenly;
+  height: 16vh;
+  justify-content: space-between;
   max-height: 25vh;
   position: fixed;
   top: 0;
@@ -14,10 +13,12 @@ export const Container = styled.header`
 `;
 
 export const HeaderStyle = styled.div`
-  color: ${ props => props.theme.secondaryColor };
+  color: ${ props => props.theme.neutral };
   font-size: large;
   letter-spacing: .25em;
-  width: 60%;
+  margin-left: 20px;
+  padding: 15px;
+  width: 50%;
 `;
 
 export const Fields = styled.div`
@@ -25,18 +26,18 @@ export const Fields = styled.div`
   display: flex;
   justify-content: space-around;
   letter-spacing: .10em;
-  width: 25%;
+  width: 45%;
 
   div {
-    color: ${ props => props.theme.secondaryColor };
+    color: ${ props => props.theme.neutral };
     line-height: 30px;
-    width: 100%;
+    padding: 10px;
+    width: 70%;
   }
 
   span {
-    background: ${ props => props.theme.secondaryColor };
-    border-radius: 100%;
-    color: ${ props => props.theme.primaryColor };
+    color: ${ props => props.theme.neutral };
+    font-weight: 700;
     padding: 12px;
   }
 `;

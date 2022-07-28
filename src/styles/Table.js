@@ -9,32 +9,33 @@ export const ContainerTable = styled.div`
 `;
 
 export const TableStyle = styled.table`
-  border-spacing: 0;
+  border-collapse: separate;
+  border-spacing: 0 8px ;
   margin-bottom: 40px;
   table-layout: fixed;
   width: 94vw;
   
   thead {
-    background: ${ props => props.theme.tertiaryColor };
-    color:  ${ props => props.theme.secondaryColor };
+    background: ${ props => props.theme.primary };
+    color:  ${ props => props.theme.neutral };
     letter-spacing: .1em;
   }
   
   th {
     padding: 6px;
-    
+
     &.border-radius-description,
     &.border-radius-edit-remove {
-      border-bottom: 3px solid ${ props => props.theme.tertiaryColor };
-      border-top: 3px solid ${ props => props.theme.tertiaryColor };
+      border-bottom: 3px solid ${ props => props.theme.primary };
+      border-top: 3px solid ${ props => props.theme.primary };
     }
 
     &.border-radius-description {
-      border-radius: 8px 0 0 8px;
+      border-radius: 8px 0 0 4px;
     }
 
     &.border-radius-edit-remove {
-      border-radius: 0 8px 8px 0;
+      border-radius: 0 8px 4px 0;
     }
   }
   
@@ -43,18 +44,21 @@ export const TableStyle = styled.table`
   }
   
   td {
+    background: ${ props => props.theme.tableRows };
+    border-bottom: 1px solid ${ props => props.theme.tableRows };
+    border-left-width: 0;
+    border-top: 1px solid ${ props => props.theme.tableRows };
     text-align: center;
     word-wrap: break-word;
-
+    
     &.border-description {
-      border-left: 6px solid ${ props => props.theme.primaryColor };
-      border-radius: 5px;
+      border-left: 6px solid ${ props => props.theme.success };
+      border-radius: 5px 0 0 5px;
     }
-
+    
     &.table-btns {
-      align-items: center;
-      display: flex;
-      justify-content: space-between;
+      border-radius: 0 5px 5px 0;
+      border-right: 6px solid ${ props => props.theme.tableRows };
     }
   }
 `;

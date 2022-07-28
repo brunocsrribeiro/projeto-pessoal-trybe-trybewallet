@@ -6,6 +6,8 @@ import Button from '../components/Button';
 import { getUserLogin } from '../actions';
 import { ContainerLogin, FormLoginStyle, theme } from '../styles';
 import { ThemeProvider } from 'styled-components';
+import Image from '../components/Image';
+import logo from '../assets/logo_5.png';
 
 class Login extends Component {
   constructor() {
@@ -45,6 +47,7 @@ class Login extends Component {
         disabled: false,
       });
     }
+
     return this.setState({
       disabled: true,
     });
@@ -66,6 +69,7 @@ class Login extends Component {
     const { email, password, disabled } = this.state;
     return (
       <ThemeProvider theme={ theme }>
+        <Image src={ logo } />
         <ContainerLogin>
           <FormLoginStyle>
             <Input
