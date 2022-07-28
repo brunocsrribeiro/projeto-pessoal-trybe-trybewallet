@@ -3,24 +3,25 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
-    font-family: 'Edu VIC WA NT Beginner', cursive;
     margin: 0;
     padding: 0;
   }
-
+  
   body {
-    color: '#454545';
-    font-size: 62,5%;
+    background: #FFF;
+    color: #454545;
+    font-family: 'Lato', sans-serif;
   }
 `;
 
 export const theme = {
-  primaryColor: '#58C062',
-  primaryColorHover: '#3CB371',
-  secondaryColor: '#F8F8FF',
-  tertiaryColor: '#00ACEE',
-  tertiaryColorHover: '#6495ED',
-  quaternaryColor: '#B22222',
-  quaternaryColorHover: '#FF4500',
-  quinaryColor: '#F5FFFA',
+  danger: '#B22222',
+  danger_hover: '#FF4500',
+  disabled: '#DCDCDC',
+  neutral: '#F8F8FF',
+  primary: '#00ACEE',
+  primary_hover: '#6495ED',
+  success: '#58C062',
+  success_hover: '#3CB371',
+  tableRows: '#D3D3D3',  
 };

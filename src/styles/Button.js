@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 
 export const ButtonStyle = styled.button`
-  background: ${ props => props.theme.primaryColor };
+  background: ${ props => props.theme.success };
   border-radius: 3px;
-  border: 2px solid ${ props => props.theme.primaryColor};
-  color: ${ props => props.theme.secondaryColor };
+  border: 2px solid ${ props => props.theme.success};
+  color: ${ props => props.theme.neutral };
   font-size: 1em;
-  font-weight: bolder;
+  letter-spacing: .15em;
   margin: 1em;
   padding: 0.25em 1em;
 
@@ -15,34 +15,40 @@ export const ButtonStyle = styled.button`
   }
 
   &#edit-btn {
-    background: ${ props => props.theme.tertiaryColor };
+    background: ${ props => props.theme.primary };
     border-radius: 100%;
-    border: 2px solid ${ props => props.theme.tertiaryColor};
+    border: 2px solid ${ props => props.theme.primary};
     padding: 10px;
 
     :hover {
-    cursor: pointer;
-      background: ${ props => props.theme.tertiaryColorHover };
-      border: 2px solid ${ props => props.theme.tertiaryColorHover};
+      background: ${ props => props.theme.primary_hover };
+      border: 2px solid ${ props => props.theme.primary_hover};
+      cursor: pointer;
     }
   }
 
   &#delete-btn {
-    background: ${ props => props.theme.quaternaryColor };
+    background: ${ props => props.theme.danger };
     border-radius: 100%;
-    border: 2px solid ${ props => props.theme.quaternaryColor};
+    border: 2px solid ${ props => props.theme.danger};
     padding: 10px;
 
     :hover {
-      background: ${ props => props.theme.quaternaryColorHover };
-      border: 2px solid ${ props => props.theme.quaternaryColorHover};
+      background: ${ props => props.theme.danger_hover };
+      border: 2px solid ${ props => props.theme.danger_hover};
       cursor: pointer;
     }
   }
 
   :hover {
-    background: ${ props => props.theme.primaryColorHover };
-    border: 2px solid ${ props => props.theme.primaryColorHover};
+    background: ${ props => props.theme.success_hover };
+    border: 2px solid ${ props => props.theme.success_hover};
     cursor: pointer;
   }
+
+  &:disabled {
+    background: ${ props => props.theme.disabled };
+    border: 2px solid ${ props => props.theme.disabled};
+    color: ${ props => props.theme.neutral };
+  } 
 `;

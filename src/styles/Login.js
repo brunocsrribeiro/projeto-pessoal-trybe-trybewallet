@@ -1,39 +1,39 @@
 import styled from "styled-components";
 
 export const ContainerLogin = styled.div`
-  align-items: center;
   display: flex;
+  flex-direction: column;
   height: 100vh;
   justify-content: center;
+  margin: 0 auto;
+  width: 70%;
 `;
 
 export const FormLoginStyle = styled.form`
-  align-items: center;
-  align-items: center;
-  background: ${ props => props.theme.quinaryColor };
+  align-items: flex-end;
+  background: ${ props => props.theme.primary };
   border-radius: 4px;
-  box-shadow: 2px 2px 8px ${ props => props.theme.quinaryColor };
   display: flex;
   flex-direction: column;
-  height: 50vh;
+  height: 60vh;
   justify-content: center;
-  width: 50vw;
+  padding: 40px;
 
   input {
-    background: none;
     border-radius: 4px;
-    border: 1px solid ${ props => props.theme.tertiaryColor };
     border: none;
     letter-spacing: .2em;
-    line-height: 2em;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     outline: none;
-    padding: .8em;
+    padding: .6em;
     text-align: center;
-    width: 35vw;
+    width: 25vw;
   };
 
   button {
-    width: 35vw;
+    margin-top: 20px;
+    margin: 0;
+    padding: 20px;
+    width: 25vw;
   }
 `;

@@ -48,7 +48,7 @@ class Table extends Component {
       dispatchIdEdit } = this.props;
 
     return (
-      <TableStyle>
+      <TableStyle cellSpacing='0'>
         <thead>
           <tr>
             <th className='border-radius-description'>Descrição</th>
